@@ -20,30 +20,7 @@ let WorkoutObject = function(pID, pDate, pWorkout, pExercise, pReps, pWeight) {
     this.Reps = pReps;
     this.Weight = pWeight;
 }
-class Movie {
 
-    constructor(title, rating) {
-        this.movieTitle = title.trim();
-        this.movieRating = rating.trim();
-    }
-
-    validate() {
-
-        if (this.movieTitle == '') {
-            return false;
-        }
-        else if (this.movieRating == '' || this.movieRating < 1 || this.movieRating > 5) {
-            return false;
-        }
-        else {
-            return true;
-        }
-    }
-
-    toString() {
-        return `${this.movieTitle} `;
-    }
-}
 
 
 workoutArray.push(new WorkoutObject(1001, new Date("02/21/2021"), "Bodyweight", "Lunges", 45, 0));
@@ -218,3 +195,10 @@ function maxWeightlifting(){
         }
     });
 };
+
+// function addChild() {
+//     document.getElementById('form1').style.display = 'block';
+// }
+// function addChild() {
+//     document.getElementById('form2').style.display = 'block';
+// }
