@@ -55,7 +55,24 @@
                 <div data-role="content" data-theme="a">
                         <h2>Bodyweight Target Reps</h2>
                         <div id="divBodyweightList"></div>
-                        <button type="button">Start Bodyweight Workout!</button>
+                        <button type="button" id="formButton">Start Bodyweight Workout!</button>
+
+
+                        <form id="form1">
+                                <div>Date:</div> <input type="text" name="date">
+                                <div>Excercise: </div>
+                                <select id="exercise" name="exercise">
+                                      <option value="pushUps">Push-ups</option>
+                                      <option value="plank">Plank</option>
+                                      <option value="squats">Squats</option>
+                                      <option value="lateralLegLifts">Lateral Leg Lifts</option>
+                                      <option value="lunges">Lunges</option></select>
+
+                                <div>Reps: </div><input type="text" name="reps">
+                              <button type="button" id="submit">Submit</button>
+                              </form>
+                              </div>
+                        </div>
                 </div>
                 <!-- page footer -->
                 <div data-role="footer">
@@ -81,8 +98,24 @@
                 <div data-role="content" data-theme="a">
                         <h2>Weightlifting Target Weight</h2>
                         <div id="divWeightliftingList"></div>
-                        <button type="button">Start Weightlifting Workout!</button>
+                <button type="button" id="formButton">Start Weightlifting Workout!</button>
+
+                <form id="form2">
+                  <div>Date:</div> <input type="text" name="date">
+                  <div>Excercise: </div>
+                  <select id="exercise" name="exercise">
+                        <option value="squats">Squats</option>
+                        <option value="deadlift">Deadlift</option>
+                        <option value="overheadPress">Overhead Press</option>
+                        <option value="benchPress">Bench Press</option>
+                        <option value="Row">Row</option></select>
+                
+                  <div>Weight:</div> <input type="text" name="weight">
+                  <div>Reps: </div><input type="text" name="reps">
+                <button type="button" id="submit">Submit</button>
+                </form>
                 </div>
+
                 <!-- page footer -->
                 <div data-role="footer">
                         <h1>Copyright © 2021</h1>

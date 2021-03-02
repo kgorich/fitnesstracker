@@ -20,6 +20,31 @@ let WorkoutObject = function(pID, pDate, pWorkout, pExercise, pReps, pWeight) {
     this.Reps = pReps;
     this.Weight = pWeight;
 }
+class Movie {
+
+    constructor(title, rating) {
+        this.movieTitle = title.trim();
+        this.movieRating = rating.trim();
+    }
+
+    validate() {
+
+        if (this.movieTitle == '') {
+            return false;
+        }
+        else if (this.movieRating == '' || this.movieRating < 1 || this.movieRating > 5) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    toString() {
+        return `${this.movieTitle} `;
+    }
+}
+
 
 workoutArray.push(new WorkoutObject(1001, new Date("02/21/2021"), "Bodyweight", "Lunges", 45, 0));
 workoutArray.push(new WorkoutObject(1002, new Date("02/22/2021"), "Bodyweight", "Push-ups", 30, 0));
