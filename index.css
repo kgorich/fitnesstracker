@@ -1,7 +1,13 @@
-/* #form1 {
+/* 
+ 
+.open-button {
+    border: none;
+    cursor: pointer;
+  
+  }
+ 
+  .form-popup {
     display: none;
-}
 
-#form2{
-    display: none;
-} */
+   
+  }  */

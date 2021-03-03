@@ -21,6 +21,22 @@ let WorkoutObject = function(pID, pDate, pWorkout, pExercise, pReps, pWeight) {
     this.Weight = pWeight;
 }
 
+function openForm() {
+    document.getElementById("FormB").style.display = "block";
+}
+  
+function closeForm() {
+    document.getElementById("FormB").style.display = "none";
+}
+  
+function openForm() {
+    document.getElementById("FormW").style.display = "block";
+}
+  
+function closeForm() {
+    document.getElementById("FormW").style.display = "none";
+}
+
 
 
 workoutArray.push(new WorkoutObject(1001, new Date("02/21/2021"), "Bodyweight", "Lunges", 45, 0));
@@ -196,9 +212,20 @@ function maxWeightlifting(){
     });
 };
 
-// function addChild() {
-//     document.getElementById('form1').style.display = 'block';
-// }
-// function addChild() {
-//     document.getElementById('form2').style.display = 'block';
-// }
+
+
+//   function openForm() {
+//     document.getElementById("FormB").style.display = "block";
+//   }
+  
+//   function closeForm() {
+//     document.getElementById("FormB").style.display = "none";
+//   }
+  
+//   function openForm() {
+//     document.getElementById("FormW").style.display = "block";
+//   }
+  
+//   function closeForm() {
+//     document.getElementById("FormW").style.display = "none";
+//   }

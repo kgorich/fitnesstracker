@@ -55,25 +55,32 @@
                 <div data-role="content" data-theme="a">
                         <h2>Bodyweight Target Reps</h2>
                         <div id="divBodyweightList"></div>
-                        <button type="button" id="formButton">Start Bodyweight Workout!</button>
+                        
+                        <button class="open-button" onclick="openForm()">Start Bodyweight Workout!</button>
 
-
-                        <form id="form1">
-                                <div>Date:</div> <input type="text" name="date">
-                                <div>Excercise: </div>
-                                <select id="exercise" name="exercise">
-                                      <option value="pushUps">Push-ups</option>
-                                      <option value="plank">Plank</option>
-                                      <option value="squats">Squats</option>
-                                      <option value="lateralLegLifts">Lateral Leg Lifts</option>
-                                      <option value="lunges">Lunges</option></select>
-
-                                <div>Reps: </div><input type="text" name="reps">
-                              <button type="button" id="submit">Submit</button>
-                              </form>
+                              <div class="form-popup" id="FormB">
+                                <form action="/action_page.php" class="form-container">
+                                  <h1>Track Your Progress</h1>
+                              
+                                  <label for="date"><b>Date</b></label>
+                                  <input type="text" placeholder="Enter Date" name="date" required>
+                                  <label for="exercise"><b>Excercise</b></label>
+                                  <select id="exercise" name="exercise">
+                                        <option value="pushUps">Push-ups</option>
+                                        <option value="plank">Plank</option>
+                                        <option value="squats">Squats</option>
+                                        <option value="lateralLegLifts">Lateral Leg Lifts</option>
+                                        <option value="lunges">Lunges</option></select>
+                                  <label for="reps"><b>Reps</b></label>
+                                  <input type="text" placeholder="Enter Reps" name="reps" required>                                       
+                                
+                              
+                                  <button type="submit" class="btn">Submit</button>
+                                  <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+                                </form>
+                              </div> 
                               </div>
-                        </div>
-                </div>
+                 
                 <!-- page footer -->
                 <div data-role="footer">
                         <h1>Copyright © 2021</h1>
@@ -98,22 +105,32 @@
                 <div data-role="content" data-theme="a">
                         <h2>Weightlifting Target Weight</h2>
                         <div id="divWeightliftingList"></div>
-                <button type="button" id="formButton">Start Weightlifting Workout!</button>
+            
+                 <button class="open-button" onclick="openForm()">Start Weightlifting Workout!</button>
 
-                <form id="form2">
-                  <div>Date:</div> <input type="text" name="date">
-                  <div>Excercise: </div>
-                  <select id="exercise" name="exercise">
-                        <option value="squats">Squats</option>
-                        <option value="deadlift">Deadlift</option>
-                        <option value="overheadPress">Overhead Press</option>
-                        <option value="benchPress">Bench Press</option>
-                        <option value="Row">Row</option></select>
+                  <div class="form-popup" id="FormW">
+                  <form action="/action_page.php" class="form-container">
+                    <h1>Track Your Progress</h1>
                 
-                  <div>Weight:</div> <input type="text" name="weight">
-                  <div>Reps: </div><input type="text" name="reps">
-                <button type="button" id="submit">Submit</button>
-                </form>
+                    <label for="date"><b>Date</b></label>
+                    <input type="text" placeholder="Enter Date" name="date" required>
+                
+                    <label for="exercise"><b>Excercise</b></label>
+                    <select id="exercise" name="exercise">
+                          <option value="squats">Squats</option>
+                          <option value="deadlift">Deadlift</option>
+                          <option value="overheadPress">Overhead Press</option>
+                          <option value="benchPress">Bench Press</option>
+                          <option value="row">Row</option></select>
+                    <label for="reps"><b>Reps</b></label>
+                    <input type="text" placeholder="Enter Reps" name="reps" required>                                       
+                    <label for="Weight"><b>Weight</b></label>
+                    <input type="text" placeholder="Enter Weight" name="weight" required>   
+                
+                    <button type="submit" class="btn">Submit</button>
+                    <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+                  </form>
+                </div> 
                 </div>
 
                 <!-- page footer -->
