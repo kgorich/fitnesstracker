@@ -20,10 +20,8 @@ document.getElementById("formBStartButton").addEventListener("click", formBStart
 document.getElementById("formWStartButton").addEventListener("click", formWStartEvent);
 document.getElementById("formBEndButton").addEventListener("click", formBEndEvent);
 document.getElementById("formWEndButton").addEventListener("click", formWEndEvent);
-// document.getElementById("formBSaveButton").addEventListener("click", formBSaveEvent);
-// document.getElementById("formWSaveButton").addEventListener("click", formWSaveEvent);
-
-
+document.getElementById("formBSaveButton").addEventListener("click", formBSaveEvent);
+document.getElementById("formWSaveButton").addEventListener("click", formWSaveEvent);
 
 let WorkoutObject = function(pID, pDate, pWorkout, pExercise, pReps, pWeight) {
     this.ID = pID;
@@ -34,34 +32,50 @@ let WorkoutObject = function(pID, pDate, pWorkout, pExercise, pReps, pWeight) {
     this.Weight = pWeight;
 }
 
-// sample data
-workoutArray.push(new WorkoutObject(1001, new Date("02/21/2021"), "Bodyweight", "Lunges", 45, 0));
-workoutArray.push(new WorkoutObject(1002, new Date("02/22/2021"), "Bodyweight", "Push-ups", 30, 0));
-workoutArray.push(new WorkoutObject(1003, new Date("02/22/2021"), "Weightlifting", "Squats", 10, 150));
-workoutArray.push(new WorkoutObject(1004, new Date("02/23/2021"), "Weightlifting", "Deadlift", 10, 135));
-workoutArray.push(new WorkoutObject(1005, new Date("02/23/2021"), "Weightlifting", "Overhead Press", 10, 35));
-workoutArray.push(new WorkoutObject(1006, new Date("02/24/2021"), "Bodyweight", "Plank", 10, 0));
-workoutArray.push(new WorkoutObject(1007, new Date("02/24/2021"), "Bodyweight", "Squats", 25, 0));
-workoutArray.push(new WorkoutObject(1008, new Date("02/25/2021"), "Bodyweight", "Lateral Leg Lifts", 10, 0));
-workoutArray.push(new WorkoutObject(1009, new Date("02/26/2021"), "Weightlifting", "Bench Press", 10, 95));
-workoutArray.push(new WorkoutObject(1010, new Date("02/27/2021"), "Weightlifting", "Row", 10, 25));
-workoutArray.push(new WorkoutObject(1011, new Date("02/28/2021"), "Bodyweight", "Lunges", 50, 0));
-workoutArray.push(new WorkoutObject(1012, new Date("02/24/2021"), "Bodyweight", "Squats", 20, 0));
+workoutArray.push(new WorkoutObject(1001, new Date("02/21/2021").toISOString().slice(0,10), "Bodyweight", "Lunges", 45, 0));
+workoutArray.push(new WorkoutObject(1002, new Date("02/22/2021").toISOString().slice(0,10), "Bodyweight", "Push-ups", 30, 0));
+workoutArray.push(new WorkoutObject(1003, new Date("02/22/2021").toISOString().slice(0,10), "Weightlifting", "Squats", 10, 150));
+workoutArray.push(new WorkoutObject(1004, new Date("02/23/2021").toISOString().slice(0,10), "Weightlifting", "Deadlift", 10, 135));
+workoutArray.push(new WorkoutObject(1005, new Date("02/23/2021").toISOString().slice(0,10), "Weightlifting", "Overhead Press", 10, 35));
+workoutArray.push(new WorkoutObject(1006, new Date("02/24/2021").toISOString().slice(0,10), "Bodyweight", "Plank", 10, 0));
+workoutArray.push(new WorkoutObject(1007, new Date("02/24/2021").toISOString().slice(0,10), "Bodyweight", "Squats", 25, 0));
+workoutArray.push(new WorkoutObject(1008, new Date("02/25/2021").toISOString().slice(0,10), "Bodyweight", "Lateral Leg Lifts", 10, 0));
+workoutArray.push(new WorkoutObject(1009, new Date("02/26/2021").toISOString().slice(0,10), "Weightlifting", "Bench Press", 10, 95));
+workoutArray.push(new WorkoutObject(1010, new Date("02/27/2021").toISOString().slice(0,10), "Weightlifting", "Row", 10, 25));
+workoutArray.push(new WorkoutObject(1011, new Date("02/28/2021").toISOString().slice(0,10), "Bodyweight", "Lunges", 50, 0));
+workoutArray.push(new WorkoutObject(1012, new Date("02/24/2021").toISOString().slice(0,10), "Bodyweight", "Squats", 20, 0));
 
-createTrackerTable();
-createBodyweightMaxTable();
-createWeightliftingMaxTable();
+$(document).on("pagebeforeshow", "#bodyweight", function () {
+    refreshBodyweightData();
+    document.getElementById("formBEndButton").style.display = "none";
+    document.getElementById("divFormB").style.display = "none";
+    document.getElementById("formBStartButton").style.display = "block";
+    document.getElementById("formB").reset();
+});
+
+$(document).on("pagebeforeshow", "#weightlifting", function () {
+    refreshWeightliftingData();
+    document.getElementById("formWEndButton").style.display = "none";
+    document.getElementById("divFormW").style.display = "none";
+    document.getElementById("formWStartButton").style.display = "block";
+    document.getElementById("formW").reset();
+});
+
+$(document).on("pagebeforeshow", "#log", function () {
+    refreshLogData();
+});
 
 function formBStartEvent(){
     document.getElementById("formBStartButton").style.display = "none";
     document.getElementById("formBEndButton").style.display = "block";
     document.getElementById("divFormB").style.display = "block";
+    document.getElementById("formBDateInput").select();
 }
-
 function formWStartEvent(){
     document.getElementById("formWStartButton").style.display = "none";
     document.getElementById("formWEndButton").style.display = "block";
     document.getElementById("divFormW").style.display = "block";
+    document.getElementById("formWDateInput").select();
 }
 
 function formBEndEvent(){
@@ -76,11 +90,39 @@ function formWEndEvent(){
     document.getElementById("formWStartButton").style.display = "block";
 }
 
+function formBSaveEvent(){
+    maxID();
+    let workout = new WorkoutObject((lastID + 1), document.getElementById("formBDateInput").value, "Bodyweight", document.getElementById("formBExerciseInput").value, document.getElementById("formBRepsInput").value, 0);
+    if (!workout.isValid()) {
+        alert('Error: Data was not good.')
+    } else {
+        workoutArray.push(workout);
+        lastID++;
+        refreshBodyweightData();
+        document.getElementById("formB").reset();
+        document.getElementById("formBDateInput").select();
+    };
+}
+
+function formWSaveEvent(){
+    maxID();
+    let workout = new WorkoutObject((lastID + 1), document.getElementById("formWDateInput").value, "Weightlifting", document.getElementById("formWExerciseInput").value, document.getElementById("formWRepsInput").value, document.getElementById("formWWeightInput").value);
+    if (!workout.isValid()) {
+        alert('Error: Data was not good.')
+    } else {
+        workoutArray.push(workout);
+        lastID++;
+        refreshWeightliftingData();
+        document.getElementById("formW").reset();
+        document.getElementById("formWDateInput").select();
+    };
+}
+
 function createTrackerTable() {
     let divLogData = document.getElementById("divLogData");
-    let table = document.createElement("table");
-    table.id = "trackerTable";
-    let header = table.createTHead();
+    let trackertable = document.createElement("table");
+    trackertable.id = "trackerTable";
+    let header = trackertable.createTHead();
     let row = header.insertRow(0);
     $(row).append("<th>ID</th>" +
         "<th>Date</th>" +
@@ -91,12 +133,12 @@ function createTrackerTable() {
         "<th></th>" +
         "<th></th>");
     let body = document.createElement("tbody");
-    table.appendChild(body);
-    divLogData.appendChild(table);
+    trackertable.appendChild(body);
+    divLogData.appendChild(trackertable);
     
     workoutArray.forEach(function(pElement) {
         $("#trackerTable tbody").append("<tr><td>" + pElement.ID +
-            "</td><td>" + pElement.Date.toDateString() +
+            "</td><td>" + pElement.Date +
             "</td><td>" + pElement.Workout +
             "</td><td>" + pElement.Exercise +
             "</td><td>" + pElement.Reps + " reps" +
@@ -104,7 +146,7 @@ function createTrackerTable() {
             "</td><td><a href=''>Edit</a>" +
             "</td><td><a href=''>Delete</a>");    
     });
-};
+}
 
 function createBodyweightMaxTable() {
     maxBodyweight();
@@ -121,26 +163,26 @@ function createBodyweightMaxTable() {
     workoutArray.forEach(function(pElement) {
         if (pElement.Workout === "Bodyweight" && pElement.Exercise === "Squats" && pElement.Reps >= maxBodyweightEx1) {
             $("#bodyweightTable tbody").append("<tr><td>" + pElement.Exercise +
-            "</td><td>" + (pElement.Reps + 5) + " reps");
+            "</td><td>" + (parseInt(pElement.Reps) + 5) + " reps");
         }
         if (pElement.Workout === "Bodyweight" && pElement.Exercise === "Lunges" && pElement.Reps >= maxBodyweightEx2) {
             $("#bodyweightTable tbody").append("<tr><td>" + pElement.Exercise +
-            "</td><td>" + (pElement.Reps + 5) + " reps");
+            "</td><td>" + (parseInt(pElement.Reps) + 5) + " reps");
         }
         if (pElement.Workout === "Bodyweight" && pElement.Exercise === "Lateral Leg Lifts" && pElement.Reps >= maxBodyweightEx3) {
             $("#bodyweightTable tbody").append("<tr><td>" + pElement.Exercise +
-            "</td><td>" + (pElement.Reps + 5) + " reps");
+            "</td><td>" + (parseInt(pElement.Reps) + 5) + " reps");
         }
         if (pElement.Workout === "Bodyweight" && pElement.Exercise === "Plank" && pElement.Reps >= maxBodyweightEx4) {
             $("#bodyweightTable tbody").append("<tr><td>" + pElement.Exercise +
-            "</td><td>" + (pElement.Reps + 5) + " reps");
+            "</td><td>" + (parseInt(pElement.Reps) + 5) + " reps");
         }
         if (pElement.Workout === "Bodyweight" && pElement.Exercise === "Push-ups" && pElement.Reps >= maxBodyweightEx5) {
             $("#bodyweightTable tbody").append("<tr><td>" + pElement.Exercise +
-            "</td><td>" + (pElement.Reps + 5) + " reps");
+            "</td><td>" + (parseInt(pElement.Reps) + 5) + " reps");
         }
     });
-};
+}
 
 function createWeightliftingMaxTable() {
     maxWeightlifting();
@@ -155,28 +197,28 @@ function createWeightliftingMaxTable() {
     divWeightliftingData.appendChild(table);
 
     workoutArray.forEach(function(pElement) {
-        if (pElement.Workout === "Weightlifting" && pElement.Exercise === "Deadlift" && pElement.Weight >= maxBodyweightEx1) {
+        if (pElement.Workout === "Weightlifting" && pElement.Exercise === "Deadlift" && pElement.Weight >= maxWeightliftingEx1) {
             $("#weightliftingTable tbody").append("<tr><td>" + pElement.Exercise +
-            "</td><td>" + pElement.Reps + " reps</td><td>" + (pElement.Weight + 5) + " lb.</td>");
+            "</td><td>" + 10 + " reps</td><td>" + (parseInt(pElement.Weight) + 5) + " lb.</td>");
         }
-        if (pElement.Workout === "Weightlifting" && pElement.Exercise === "Squats" && pElement.Weight >= maxBodyweightEx2) {
+        if (pElement.Workout === "Weightlifting" && pElement.Exercise === "Squats" && pElement.Weight >= maxWeightliftingEx2) {
             $("#weightliftingTable tbody").append("<tr><td>" + pElement.Exercise +
-            "</td><td>" + pElement.Reps + " reps</td><td>" + (pElement.Weight + 5) + " lb.</td>");
+            "</td><td>" + 10 + " reps</td><td>" + (parseInt(pElement.Weight) + 5) + " lb.</td>");
         }
-        if (pElement.Workout === "Weightlifting" && pElement.Exercise === "Row" && pElement.Weight >= maxBodyweightEx3) {
+        if (pElement.Workout === "Weightlifting" && pElement.Exercise === "Row" && pElement.Weight >= maxWeightliftingEx3) {
             $("#weightliftingTable tbody").append("<tr><td>" + pElement.Exercise +
-            "</td><td>" + pElement.Reps + " reps</td><td>" + (pElement.Weight + 5) + " lb.</td>");
+            "</td><td>" + 10 + " reps</td><td>" + (parseInt(pElement.Weight) + 5) + " lb.</td>");
         }
-        if (pElement.Workout === "Weightlifting" && pElement.Exercise === "Bench Press" && pElement.Weight >= maxBodyweightEx4) {
+        if (pElement.Workout === "Weightlifting" && pElement.Exercise === "Bench Press" && pElement.Weight >= maxWeightliftingEx4) {
             $("#weightliftingTable tbody").append("<tr><td>" + pElement.Exercise +
-            "</td><td>" + pElement.Reps + " reps</td><td>" + (pElement.Weight + 5) + " lb.</td>");
+            "</td><td>" + 10 + " reps</td><td>" + (parseInt(pElement.Weight) + 5) + " lb.</td>");
         }
-        if (pElement.Workout === "Weightlifting" && pElement.Exercise === "Overhead Press" && pElement.Weight >= maxBodyweightEx5) {
+        if (pElement.Workout === "Weightlifting" && pElement.Exercise === "Overhead Press" && pElement.Weight >= maxWeightliftingEx5) {
             $("#weightliftingTable tbody").append("<tr><td>" + pElement.Exercise +
-            "</td><td>" + pElement.Reps + " reps</td><td>" + (pElement.Weight + 5) + " lb.</td>");
+            "</td><td>" + 10 + " reps</td><td>" + (parseInt(pElement.Weight) + 5) + " lb.</td>");
         }
     });
-};
+}
 
 function maxBodyweight(){
     workoutArray.forEach(function(pElement) {
@@ -210,7 +252,7 @@ function maxBodyweight(){
             }
         }
     });
-};
+}
 
 function maxWeightlifting(){
     workoutArray.forEach(function(pElement) {
@@ -244,7 +286,7 @@ function maxWeightlifting(){
             }
         }
     });
-};
+}
 
 function maxID(){
     workoutArray.forEach(function(pElement) {
@@ -252,4 +294,45 @@ function maxID(){
             lastID = pElement.ID;
         }
     });
+}
+
+WorkoutObject.prototype.isValid = function(){
+    switch (this.Workout) {
+        case "Bodyweight":
+            if (this.Date === "" || this.Reps === "" || isNaN(this.Reps) || this.Reps > 9999 || this.Reps < 1) {
+                return false;
+            } else {
+                return true;
+            };
+        case "Weightlifting":
+            if (this.Date === "" || this.Reps === "" || isNaN(this.Reps) || this.Reps > 9999 || this.Reps < 1) {
+                return false;
+            } else {
+                return true;
+            };
+    }
+}
+
+function refreshBodyweightData() {
+    let divBodyweightData = document.getElementById("divBodyweightData");
+    while (divBodyweightData.firstChild) {
+        divBodyweightData.removeChild(divBodyweightData.firstChild);
+    };
+    createBodyweightMaxTable();
+}
+
+function refreshWeightliftingData() {
+    let divWeightliftingData = document.getElementById("divWeightliftingData");
+    while (divWeightliftingData.firstChild) {
+        divWeightliftingData.removeChild(divWeightliftingData.firstChild);
+    };
+    createWeightliftingMaxTable();
+}
+
+function refreshLogData() {
+    let divLogData = document.getElementById("divLogData");
+    while (divLogData.firstChild) {
+        divLogData.removeChild(divLogData.firstChild);
+    };
+    createTrackerTable();
 }
