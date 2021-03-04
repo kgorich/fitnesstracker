@@ -59,20 +59,20 @@
                         <button class="open-button" id="formBStartButton">Start Bodyweight Workout!</button>
                         <div class="form-popup" id="divFormB">
                                 <button class="close-button" id="formBEndButton">End Bodyweight Workout!</button>
-                                <form class="form-container" onsubmit="return false">
+                                <form class="form-container" id="formB">
                                         <h2>Track Your Progress</h2>
-                                        <label for="dateInput">Date</label>
-                                        <input type="date" id="dateInput" name="date" required>
-                                        <label for="exerciseInput">Excercise</label>
-                                        <select id="exerciseInput" name="exercise">
+                                        <label for="formBDateInput">Date</label>
+                                        <input type="date" id="formBDateInput" name="date" required>
+                                        <label for="formBExerciseInput">Excercise</label>
+                                        <select id="formBExerciseInput" name="exercise">
                                                 <option value="Push-ups" selected>Push-ups</option>
                                                 <option value="Plank">Plank</option>
                                                 <option value="Squats">Squats</option>
                                                 <option value="Lateral Leg Lifts">Lateral Leg Lifts</option>
                                                 <option value="Lunges">Lunges</option>
                                         </select>
-                                        <label for="repsInput">Reps</label>
-                                        <input type="number" id="repsInput" placeholder="Enter Reps" name="reps" min="1" max="999" step="1" required>
+                                        <label for="formBRepsInput">Reps</label>
+                                        <input type="number" id="formBRepsInput" placeholder="Enter Reps" name="reps" min="1" max="9999" step="1" required>
                                         <button type="button" class="save-button" id="formBSaveButton">Save Progress</button>                                     
                                 </form>
                         </div>
@@ -104,23 +104,23 @@
                         <button class="open-button" id="formWStartButton">Start Weightlifting Workout!</button>
                         <div class="form-popup" id="divFormW">
                                 <button class="close-button" id="formWEndButton">End Weightlifting Workout!</button>
-                                <form class="form-container" onsubmit="return false">
+                                <form class="form-container" id="formW">
                                         <h2>Track Your Progress</h2>
-                                        <label for="dateInput">Date</label>
-                                        <input type="date" id="dateInput" name="date" required>
-                                        <label for="exerciseInput">Excercise</label>
-                                        <select id="exerciseInput" name="exercise">
+                                        <label for="formWDateInput">Date</label>
+                                        <input type="date" id="formWDateInput" name="date" required>
+                                        <label for="formWExerciseInput">Excercise</label>
+                                        <select id="formWExerciseInput" name="exercise">
                                                 <option value="Squats" selected>Squats</option>
                                                 <option value="Deadlift">Deadlift</option>
                                                 <option value="Overhead Press">Overhead Press</option>
                                                 <option value="Bench Press">Bench Press</option>
                                                 <option value="Row">Row</option>
                                         </select>
-                                        <label for="repsInput">Reps</label>
-                                        <input type="number" id="repsInput" placeholder="Enter Reps" name="reps" min="1" max="999" step="1" required>
-                                        <label for="weightInput">Weight</label>
-                                        <input type="number" id="weightInput" placeholder="Enter Weight" name="reps" min="1" max="999" step="1" required>
-                                        <button type="button" class="save-button" id="formWSaveButton">Save Progress</button>                                     
+                                        <label for="formWRepsInput">Reps</label>
+                                        <input type="number" id="formWRepsInput" placeholder="Enter Reps" name="reps" min="1" max="9999" step="1" required>
+                                        <label for="formWWeightInput">Weight</label>
+                                        <input type="number" id="formWWeightInput" placeholder="Enter Weight" name="weight" min="1" max="9999" step="1" required>
+                                        <button type="button" class="save-button" id="formWSaveButton">Save Progress</button>                                 
                                 </form>
                         </div>
                 </div>
