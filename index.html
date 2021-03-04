@@ -22,13 +22,14 @@
                                         <li><a href="#home">Home</a></li>
                                         <li><a href="#bodyweight">Bodyweight</a></li>
                                         <li><a href="#weightlifting">Weightlifting</a></li>
-                                        <li><a href="#tracker">Tracker</a></li>
+                                        <li><a href="#log">Log</a></li>
                                 </ul>
                         </div>
                 </div>
                 <!-- page content -->
                 <div data-role="content" data-theme="a">
                         <h2>Welcome to Fitness Tracker!</h2>
+                        <img src="dumbbell.png" alt="dumbbell">
                         <p>Achieve fitness goals with targeted workouts and personal performance tracking all in one place.</p>
                 </div>
                 <!-- page footer -->
@@ -40,47 +41,42 @@
         <div data-role="page" id="bodyweight">
                 <!-- page header -->
                 <div data-role="header" data-theme="a">
-                        <h1>Fitness Tracker - Bodyweight</h1>
+                        <h1>Fitness Log - Bodyweight</h1>
                         <!-- navbar -->
                         <div data-role="navbar" id="navbar" data-theme="a">
                                 <ul>
                                         <li><a href="#home">Home</a></li>
                                         <li><a href="#bodyweight">Bodyweight</a></li>
                                         <li><a href="#weightlifting">Weightlifting</a></li>
-                                        <li><a href="#tracker">Tracker</a></li>
+                                        <li><a href="#log">Log</a></li>
                                 </ul>
                         </div>
                 </div>
                 <!-- page content -->
                 <div data-role="content" data-theme="a">
                         <h2>Bodyweight Target Reps</h2>
-                        <div id="divBodyweightList"></div>
-                        
-                        <button class="open-button" onclick="openForm()">Start Bodyweight Workout!</button>
-
-                              <div class="form-popup" id="FormB">
-                                <form action="/action_page.php" class="form-container">
-                                  <h1>Track Your Progress</h1>
-                              
-                                  <label for="date"><b>Date</b></label>
-                                  <input type="text" placeholder="Enter Date" name="date" required>
-                                  <label for="exercise"><b>Excercise</b></label>
-                                  <select id="exercise" name="exercise">
-                                        <option value="pushUps">Push-ups</option>
-                                        <option value="plank">Plank</option>
-                                        <option value="squats">Squats</option>
-                                        <option value="lateralLegLifts">Lateral Leg Lifts</option>
-                                        <option value="lunges">Lunges</option></select>
-                                  <label for="reps"><b>Reps</b></label>
-                                  <input type="text" placeholder="Enter Reps" name="reps" required>                                       
-                                
-                              
-                                  <button type="submit" class="btn">Submit</button>
-                                  <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+                        <div id="divBodyweightData"></div>
+                        <button class="open-button" id="formBStartButton">Start Bodyweight Workout!</button>
+                        <div class="form-popup" id="divFormB">
+                                <button class="close-button" id="formBEndButton">End Bodyweight Workout!</button>
+                                <form class="form-container" onsubmit="return false">
+                                        <h2>Track Your Progress</h2>
+                                        <label for="dateInput">Date</label>
+                                        <input type="date" id="dateInput" name="date" required>
+                                        <label for="exerciseInput">Excercise</label>
+                                        <select id="exerciseInput" name="exercise">
+                                                <option value="Push-ups" selected>Push-ups</option>
+                                                <option value="Plank">Plank</option>
+                                                <option value="Squats">Squats</option>
+                                                <option value="Lateral Leg Lifts">Lateral Leg Lifts</option>
+                                                <option value="Lunges">Lunges</option>
+                                        </select>
+                                        <label for="repsInput">Reps</label>
+                                        <input type="number" id="repsInput" placeholder="Enter Reps" name="reps" min="1" max="999" step="1" required>
+                                        <button type="button" class="save-button" id="formBSaveButton">Save Progress</button>                                     
                                 </form>
-                              </div> 
-                              </div>
-                 
+                        </div>
+                </div>
                 <!-- page footer -->
                 <div data-role="footer">
                         <h1>Copyright © 2021</h1>
@@ -90,73 +86,68 @@
         <div data-role="page" id="weightlifting">
                 <!-- page header -->
                 <div data-role="header" data-theme="a">
-                        <h1>Fitness Tracker - Weightlifting</h1>
+                        <h1>Fitness Log - Weightlifting</h1>
                         <!-- navbar -->
                         <div data-role="navbar" id="navbar" data-theme="a">
                                 <ul>
                                         <li><a href="#home">Home</a></li>
                                         <li><a href="#bodyweight">Bodyweight</a></li>
                                         <li><a href="#weightlifting">Weightlifting</a></li>
-                                        <li><a href="#tracker">Tracker</a></li>
+                                        <li><a href="#log">Log</a></li>
                                 </ul>
                         </div>
                 </div>
                 <!-- page content -->
                 <div data-role="content" data-theme="a">
                         <h2>Weightlifting Target Weight</h2>
-                        <div id="divWeightliftingList"></div>
-            
-                 <button class="open-button" onclick="openForm()">Start Weightlifting Workout!</button>
-
-                  <div class="form-popup" id="FormW">
-                  <form action="/action_page.php" class="form-container">
-                    <h1>Track Your Progress</h1>
-                
-                    <label for="date"><b>Date</b></label>
-                    <input type="text" placeholder="Enter Date" name="date" required>
-                
-                    <label for="exercise"><b>Excercise</b></label>
-                    <select id="exercise" name="exercise">
-                          <option value="squats">Squats</option>
-                          <option value="deadlift">Deadlift</option>
-                          <option value="overheadPress">Overhead Press</option>
-                          <option value="benchPress">Bench Press</option>
-                          <option value="row">Row</option></select>
-                    <label for="reps"><b>Reps</b></label>
-                    <input type="text" placeholder="Enter Reps" name="reps" required>                                       
-                    <label for="Weight"><b>Weight</b></label>
-                    <input type="text" placeholder="Enter Weight" name="weight" required>   
-                
-                    <button type="submit" class="btn">Submit</button>
-                    <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
-                  </form>
-                </div> 
+                        <div id="divWeightliftingData"></div>
+                        <button class="open-button" id="formWStartButton">Start Weightlifting Workout!</button>
+                        <div class="form-popup" id="divFormW">
+                                <button class="close-button" id="formWEndButton">End Weightlifting Workout!</button>
+                                <form class="form-container" onsubmit="return false">
+                                        <h2>Track Your Progress</h2>
+                                        <label for="dateInput">Date</label>
+                                        <input type="date" id="dateInput" name="date" required>
+                                        <label for="exerciseInput">Excercise</label>
+                                        <select id="exerciseInput" name="exercise">
+                                                <option value="Squats" selected>Squats</option>
+                                                <option value="Deadlift">Deadlift</option>
+                                                <option value="Overhead Press">Overhead Press</option>
+                                                <option value="Bench Press">Bench Press</option>
+                                                <option value="Row">Row</option>
+                                        </select>
+                                        <label for="repsInput">Reps</label>
+                                        <input type="number" id="repsInput" placeholder="Enter Reps" name="reps" min="1" max="999" step="1" required>
+                                        <label for="weightInput">Weight</label>
+                                        <input type="number" id="weightInput" placeholder="Enter Weight" name="reps" min="1" max="999" step="1" required>
+                                        <button type="button" class="save-button" id="formWSaveButton">Save Progress</button>                                     
+                                </form>
+                        </div>
                 </div>
-
                 <!-- page footer -->
                 <div data-role="footer">
                         <h1>Copyright © 2021</h1>
                 </div>
         </div>
         <!-- start of page -->
-        <div data-role="page" id="tracker">
+        <div data-role="page" id="log">
                 <!-- page header -->
                 <div data-role="header" data-theme="a">
-                        <h1>Fitness Tracker - Tracker</h1>
+                        <h1>Fitness Tracker - Log</h1>
                         <!-- navbar -->
                         <div data-role="navbar" id="navbar" data-theme="a">
                                 <ul>
                                         <li><a href="#home">Home</a></li>
                                         <li><a href="#bodyweight">Bodyweight</a></li>
                                         <li><a href="#weightlifting">Weightlifting</a></li>
-                                        <li><a href="#tracker">Tracker</a></li>
+                                        <li><a href="#log">Log</a></li>
                                 </ul>
                         </div>
                 </div>
                 <!-- page content -->
                 <div data-role="content" data-theme="a">
-                        <h2>Tracker</h2>
-                        <div id="divWorkoutList"></div>
+                        <h2>Log</h2>
+                        <div id="divLogData"></div>
                 </div>
                 <!-- page footer -->
                 <div data-role="footer">
