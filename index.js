@@ -13,15 +13,7 @@ let maxWeightliftingEx4 = 1;
 let maxWeightliftingEx5 = 1;
 
 let lastID = 1000;
-
-document.getElementById("divFormB").style.display = "none";
-document.getElementById("divFormW").style.display = "none";
-document.getElementById("formBStartButton").addEventListener("click", formBStartEvent);
-document.getElementById("formWStartButton").addEventListener("click", formWStartEvent);
-document.getElementById("formBEndButton").addEventListener("click", formBEndEvent);
-document.getElementById("formWEndButton").addEventListener("click", formWEndEvent);
-document.getElementById("formBSaveButton").addEventListener("click", formBSaveEvent);
-document.getElementById("formWSaveButton").addEventListener("click", formWSaveEvent);
+let deleteID = 0;
 
 let WorkoutObject = function(pID, pDate, pWorkout, pExercise, pReps, pWeight) {
     this.ID = pID;
@@ -44,6 +36,15 @@ workoutArray.push(new WorkoutObject(1009, new Date("02/26/2021").toISOString().s
 workoutArray.push(new WorkoutObject(1010, new Date("02/27/2021").toISOString().slice(0,10), "Weightlifting", "Row", 10, 25));
 workoutArray.push(new WorkoutObject(1011, new Date("02/28/2021").toISOString().slice(0,10), "Bodyweight", "Lunges", 50, 0));
 workoutArray.push(new WorkoutObject(1012, new Date("02/24/2021").toISOString().slice(0,10), "Bodyweight", "Squats", 20, 0));
+
+document.getElementById("divFormB").style.display = "none";
+document.getElementById("divFormW").style.display = "none";
+document.getElementById("formBStartButton").addEventListener("click", formBStartEvent);
+document.getElementById("formWStartButton").addEventListener("click", formWStartEvent);
+document.getElementById("formBEndButton").addEventListener("click", formBEndEvent);
+document.getElementById("formWEndButton").addEventListener("click", formWEndEvent);
+document.getElementById("formBSaveButton").addEventListener("click", formBSaveEvent);
+document.getElementById("formWSaveButton").addEventListener("click", formWSaveEvent);
 
 $(document).on("pagebeforeshow", "#bodyweight", function () {
     refreshBodyweightData();
@@ -94,7 +95,7 @@ function formBSaveEvent(){
     maxID();
     let workout = new WorkoutObject((lastID + 1), document.getElementById("formBDateInput").value, "Bodyweight", document.getElementById("formBExerciseInput").value, document.getElementById("formBRepsInput").value, 0);
     if (!workout.isValid()) {
-        alert('Error: Data was not good.')
+        alert('Error: Invalid data.')
     } else {
         workoutArray.push(workout);
         lastID++;
@@ -108,7 +109,7 @@ function formWSaveEvent(){
     maxID();
     let workout = new WorkoutObject((lastID + 1), document.getElementById("formWDateInput").value, "Weightlifting", document.getElementById("formWExerciseInput").value, document.getElementById("formWRepsInput").value, document.getElementById("formWWeightInput").value);
     if (!workout.isValid()) {
-        alert('Error: Data was not good.')
+        alert('Error: Invalid data.')
     } else {
         workoutArray.push(workout);
         lastID++;
@@ -130,7 +131,6 @@ function createTrackerTable() {
         "<th>Exercise</th>" +
         "<th>Reps</th>" +
         "<th>Weight</th>" +
-        "<th></th>" +
         "<th></th>");
     let body = document.createElement("tbody");
     trackertable.appendChild(body);
@@ -142,10 +142,10 @@ function createTrackerTable() {
             "</td><td>" + pElement.Workout +
             "</td><td>" + pElement.Exercise +
             "</td><td>" + pElement.Reps + " reps" +
-            "</td><td>" + pElement.Weight + " lb." + 
-            "</td><td><a href=''>Edit</a>" +
-            "</td><td><a href=''>Delete</a>");    
+            "</td><td>" + pElement.Weight + " lb." +
+            "</td><td class='deleteButton' data-parm=" + pElement.ID + ">" + "Delete");
     });
+    createEventListener();
 }
 
 function createBodyweightMaxTable() {
@@ -335,4 +335,28 @@ function refreshLogData() {
         divLogData.removeChild(divLogData.firstChild);
     };
     createTrackerTable();
+}
+
+function createEventListener() {
+    let tableRowDeleteArray = document.getElementsByClassName("deleteButton");
+    for (i = 0; i < tableRowDeleteArray.length; i++) {
+        tableRowDeleteArray[i].addEventListener('click', function () {
+            deleteID = this.getAttribute("data-parm");
+            deleteItem(deleteID);
+        });
+    }
+}
+
+function deleteItem(which) {
+    let arrayPointer = GetArrayPointer(which);
+    workoutArray.splice(arrayPointer, 1);
+    refreshLogData();
+}
+
+function GetArrayPointer(localID) {
+    for (let i = 0; i < workoutArray.length; i++) {
+        if (localID === workoutArray[i].ID) {
+            return i;
+        }
+    }
 }
