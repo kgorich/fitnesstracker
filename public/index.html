@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>Fitness Tracker</title>
+        <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="stylesheets/themes/greenMachine.css" />
+        <link rel="stylesheet" href="stylesheets/themes/jquery.mobile.icons.min.css" />
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+        <link rel="stylesheet" href="stylesheets/index.css">
+        <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+        <script defer src="javascripts/index.js"></script>
+</head>
+<body>
+        <!-- start of page -->
+        <div data-role="page" id="home">
+                <!-- page header -->
+                <div data-role="header" data-theme="a">
+                        <h1>Fitness Tracker - Home</h1>
+                        <!-- navbar -->
+                        <div data-role="navbar" id="navbar" data-theme="a">
+                                <ul>
+                                        <li><a href="#home" class="active-page">Home</a></li>
+                                        <li><a href="#bodyweight">Bodyweight</a></li>
+                                        <li><a href="#weightlifting">Weightlifting</a></li>
+                                        <li><a href="#log">Log</a></li>
+                                </ul>
+                        </div>
+                </div>
+                <!-- page content -->
+                <div data-role="content" data-theme="a">
+                        <h2>Welcome to Fitness Tracker!</h2>
+                        <p>Achieve fitness goals with targeted workouts and personal performance tracking all in one place.</p>
+                        <img src="images/dumbbell.png" alt="dumbbell">
+                </div>
+                <!-- page footer -->
+                <div data-role="footer">
+                        <h1>Copyright © 2021</h1>
+                </div>
+        </div>
+        <!-- start of page -->
+        <div data-role="page" id="bodyweight">
+                <!-- page header -->
+                <div data-role="header" data-theme="a">
+                        <h1>Fitness Tracker - Bodyweight</h1>
+                        <!-- navbar -->
+                        <div data-role="navbar" id="navbar" data-theme="a">
+                                <ul>
+                                        <li><a href="#home">Home</a></li>
+                                        <li><a href="#bodyweight" class="active-page">Bodyweight</a></li>
+                                        <li><a href="#weightlifting">Weightlifting</a></li>
+                                        <li><a href="#log">Log</a></li>
+                                </ul>
+                        </div>
+                </div>
+                <!-- page content -->
+                <div data-role="content" data-theme="a">
+                        <h2>Bodyweight Target Reps</h2>
+                        <p>Target Reps challenges you to do 5 more reps than your highest rep count.</p>
+                        <div id="divBodyweightData"></div>
+                        <button class="open-button" id="formBStartButton">Start Bodyweight Workout!</button>
+                        <div class="form-popup" id="divFormB">
+                                <button class="close-button" id="formBEndButton">End Bodyweight Workout!</button>
+                                <form class="form-container" id="formB">
+                                        <h2>Track Your Progress</h2>
+                                        <label for="formBDateInput">Date</label>
+                                        <input type="date" id="formBDateInput" name="date" required>
+                                        <label for="formBExerciseInput">Excercise</label>
+                                        <select id="formBExerciseInput" name="exercise">
+                                                <option value="Push-ups" selected>Push-ups</option>
+                                                <option value="Plank">Plank</option>
+                                                <option value="Squats">Squats</option>
+                                                <option value="Lateral Leg Lifts">Lateral Leg Lifts</option>
+                                                <option value="Lunges">Lunges</option>
+                                        </select>
+                                        <label for="formBRepsInput">Reps</label>
+                                        <input type="number" id="formBRepsInput" placeholder="Enter Reps" name="reps" min="1" max="9999" step="1" required>
+                                        <button type="button" class="save-button" id="formBSaveButton">Save Progress</button>                                     
+                                </form>
+                        </div>
+                </div>
+                <!-- page footer -->
+                <div data-role="footer">
+                        <h1>Copyright © 2021</h1>
+                </div>
+        </div>
+        <!-- start of page -->
+        <div data-role="page" id="weightlifting">
+                <!-- page header -->
+                <div data-role="header" data-theme="a">
+                        <h1>Fitness Tracker - Weightlifting</h1>
+                        <!-- navbar -->
+                        <div data-role="navbar" id="navbar" data-theme="a">
+                                <ul>
+                                        <li><a href="#home">Home</a></li>
+                                        <li><a href="#bodyweight">Bodyweight</a></li>
+                                        <li><a href="#weightlifting" class="active-page">Weightlifting</a></li>
+                                        <li><a href="#log">Log</a></li>
+                                </ul>
+                        </div>
+                </div>
+                <!-- page content -->
+                <div data-role="content" data-theme="a">
+                        <h2>Weightlifting Target Weight</h2>
+                        <p>Target Weight challenges you to 10 reps with 10 more lbs. than your highest weight.</p>
+                        <div id="divWeightliftingData"></div>
+                        <button class="open-button" id="formWStartButton">Start Weightlifting Workout!</button>
+                        <div class="form-popup" id="divFormW">
+                                <button class="close-button" id="formWEndButton">End Weightlifting Workout!</button>
+                                <form class="form-container" id="formW">
+                                        <h2>Track Your Progress</h2>
+                                        <label for="formWDateInput">Date</label>
+                                        <input type="date" id="formWDateInput" name="date" required>
+                                        <label for="formWExerciseInput">Excercise</label>
+                                        <select id="formWExerciseInput" name="exercise">
+                                                <option value="Squats" selected>Squats</option>
+                                                <option value="Deadlift">Deadlift</option>
+                                                <option value="Overhead Press">Overhead Press</option>
+                                                <option value="Bench Press">Bench Press</option>
+                                                <option value="Row">Row</option>
+                                        </select>
+                                        <label for="formWRepsInput">Reps</label>
+                                        <input type="number" id="formWRepsInput" placeholder="Enter Reps" name="reps" min="1" max="9999" step="1" required>
+                                        <label for="formWWeightInput">Weight</label>
+                                        <input type="number" id="formWWeightInput" placeholder="Enter Weight" name="weight" min="1" max="9999" step="1" required>
+                                        <button type="button" class="save-button" id="formWSaveButton">Save Progress</button>                                 
+                                </form>
+                        </div>
+                </div>
+                <!-- page footer -->
+                <div data-role="footer">
+                        <h1>Copyright © 2021</h1>
+                </div>
+        </div>
+        <!-- start of page -->
+        <div data-role="page" id="log">
+                <!-- page header -->
+                <div data-role="header" data-theme="a">
+                        <h1>Fitness Tracker - Log</h1>
+                        <!-- navbar -->
+                        <div data-role="navbar" id="navbar" data-theme="a">
+                                <ul>
+                                        <li><a href="#home">Home</a></li>
+                                        <li><a href="#bodyweight">Bodyweight</a></li>
+                                        <li><a href="#weightlifting">Weightlifting</a></li>
+                                        <li><a href="#log" class="active-page">Log</a></li>
+                                </ul>
+                        </div>
+                </div>
+                <!-- page content -->
+                <div data-role="content" data-theme="a">
+                        <h2>Log</h2>
+                        <p>Click "Delete" to remove an entry from the Fitness Tracker Log.</p>
+                        <div id="divLogData"></div>
+                </div>
+                <!-- page footer -->
+                <div data-role="footer">
+                        <h1>Copyright © 2021</h1>
+                </div>
+        </div>
+</body>
+</html>
