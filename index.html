@@ -20,7 +20,7 @@
                         <!-- navbar -->
                         <div data-role="navbar" id="navbar" data-theme="a">
                                 <ul>
-                                        <li><a href="#home">Home</a></li>
+                                        <li><a href="#home" class="active-page">Home</a></li>
                                         <li><a href="#bodyweight">Bodyweight</a></li>
                                         <li><a href="#weightlifting">Weightlifting</a></li>
                                         <li><a href="#log">Log</a></li>
@@ -30,8 +30,8 @@
                 <!-- page content -->
                 <div data-role="content" data-theme="a">
                         <h2>Welcome to Fitness Tracker!</h2>
-                        <img src="dumbbell.png" alt="dumbbell">
                         <p>Achieve fitness goals with targeted workouts and personal performance tracking all in one place.</p>
+                        <img src="dumbbell.png" alt="dumbbell">
                 </div>
                 <!-- page footer -->
                 <div data-role="footer">
@@ -47,7 +47,7 @@
                         <div data-role="navbar" id="navbar" data-theme="a">
                                 <ul>
                                         <li><a href="#home">Home</a></li>
-                                        <li><a href="#bodyweight">Bodyweight</a></li>
+                                        <li><a href="#bodyweight" class="active-page">Bodyweight</a></li>
                                         <li><a href="#weightlifting">Weightlifting</a></li>
                                         <li><a href="#log">Log</a></li>
                                 </ul>
@@ -56,6 +56,7 @@
                 <!-- page content -->
                 <div data-role="content" data-theme="a">
                         <h2>Bodyweight Target Reps</h2>
+                        <p>Target Reps challenges you to do an 5 more reps than your highest rep count.</p>
                         <div id="divBodyweightData"></div>
                         <button class="open-button" id="formBStartButton">Start Bodyweight Workout!</button>
                         <div class="form-popup" id="divFormB">
@@ -93,7 +94,7 @@
                                 <ul>
                                         <li><a href="#home">Home</a></li>
                                         <li><a href="#bodyweight">Bodyweight</a></li>
-                                        <li><a href="#weightlifting">Weightlifting</a></li>
+                                        <li><a href="#weightlifting" class="active-page">Weightlifting</a></li>
                                         <li><a href="#log">Log</a></li>
                                 </ul>
                         </div>
@@ -101,6 +102,7 @@
                 <!-- page content -->
                 <div data-role="content" data-theme="a">
                         <h2>Weightlifting Target Weight</h2>
+                        <p>Weightlifting Target Weight challenges you to 10 reps with 10 more lbs. than your highest weight.</p>
                         <div id="divWeightliftingData"></div>
                         <button class="open-button" id="formWStartButton">Start Weightlifting Workout!</button>
                         <div class="form-popup" id="divFormW">
@@ -141,13 +143,14 @@
                                         <li><a href="#home">Home</a></li>
                                         <li><a href="#bodyweight">Bodyweight</a></li>
                                         <li><a href="#weightlifting">Weightlifting</a></li>
-                                        <li><a href="#log">Log</a></li>
+                                        <li><a href="#log" class="active-page">Log</a></li>
                                 </ul>
                         </div>
                 </div>
                 <!-- page content -->
                 <div data-role="content" data-theme="a">
                         <h2>Log</h2>
+                        <p>Click "Delete" to remove an entry from the Fitness Tracker Log.</p>
                         <div id="divLogData"></div>
                 </div>
                 <!-- page footer -->
