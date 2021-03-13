@@ -199,23 +199,23 @@ function createWeightliftingMaxTable() {
     workoutArray.forEach(function(pElement) {
         if (pElement.Workout === "Weightlifting" && pElement.Exercise === "Deadlift" && pElement.Weight >= maxWeightliftingEx1) {
             $("#weightliftingTable tbody").append("<tr><td>" + pElement.Exercise +
-            "</td><td>" + 10 + " reps</td><td>" + (parseInt(pElement.Weight) + 5) + " lb.</td>");
+            "</td><td>" + 10 + " reps</td><td>" + (parseInt(pElement.Weight) + 10) + " lb.</td>");
         }
         if (pElement.Workout === "Weightlifting" && pElement.Exercise === "Squats" && pElement.Weight >= maxWeightliftingEx2) {
             $("#weightliftingTable tbody").append("<tr><td>" + pElement.Exercise +
-            "</td><td>" + 10 + " reps</td><td>" + (parseInt(pElement.Weight) + 5) + " lb.</td>");
+            "</td><td>" + 10 + " reps</td><td>" + (parseInt(pElement.Weight) + 10) + " lb.</td>");
         }
         if (pElement.Workout === "Weightlifting" && pElement.Exercise === "Row" && pElement.Weight >= maxWeightliftingEx3) {
             $("#weightliftingTable tbody").append("<tr><td>" + pElement.Exercise +
-            "</td><td>" + 10 + " reps</td><td>" + (parseInt(pElement.Weight) + 5) + " lb.</td>");
+            "</td><td>" + 10 + " reps</td><td>" + (parseInt(pElement.Weight) + 10) + " lb.</td>");
         }
         if (pElement.Workout === "Weightlifting" && pElement.Exercise === "Bench Press" && pElement.Weight >= maxWeightliftingEx4) {
             $("#weightliftingTable tbody").append("<tr><td>" + pElement.Exercise +
-            "</td><td>" + 10 + " reps</td><td>" + (parseInt(pElement.Weight) + 5) + " lb.</td>");
+            "</td><td>" + 10 + " reps</td><td>" + (parseInt(pElement.Weight) + 10) + " lb.</td>");
         }
         if (pElement.Workout === "Weightlifting" && pElement.Exercise === "Overhead Press" && pElement.Weight >= maxWeightliftingEx5) {
             $("#weightliftingTable tbody").append("<tr><td>" + pElement.Exercise +
-            "</td><td>" + 10 + " reps</td><td>" + (parseInt(pElement.Weight) + 5) + " lb.</td>");
+            "</td><td>" + 10 + " reps</td><td>" + (parseInt(pElement.Weight) + 10) + " lb.</td>");
         }
     });
 }
