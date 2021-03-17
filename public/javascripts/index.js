@@ -16,8 +16,8 @@ let maxWeightliftingEx5 = 1;
 let lastID = 1000;
 let deleteID = 0;
 
-let WorkoutObject = function(pID, pDate, pWorkout, pExercise, pReps, pWeight) {
-    this.ID = pID;
+let WorkoutObject = function(pDate, pWorkout, pExercise, pReps, pWeight) {
+    this.ID = ++lastID;
     this.Date = pDate;
     this.Workout = pWorkout;
     this.Exercise = pExercise;
@@ -25,113 +25,56 @@ let WorkoutObject = function(pID, pDate, pWorkout, pExercise, pReps, pWeight) {
     this.Weight = pWeight;
 }
 
-document.getElementById("divFormB").style.display = "none";
-document.getElementById("divFormW").style.display = "none";
-document.getElementById("formBStartButton").addEventListener("click", formBStartEvent);
-document.getElementById("formWStartButton").addEventListener("click", formWStartEvent);
-document.getElementById("formBEndButton").addEventListener("click", formBEndEvent);
-document.getElementById("formWEndButton").addEventListener("click", formWEndEvent);
-document.getElementById("formBSaveButton").addEventListener("click", formBSaveEvent);
-document.getElementById("formWSaveButton").addEventListener("click", formWSaveEvent);
-
-$(document).on("pagebeforeshow", "#bodyweight", function () {
-    refreshBodyweightData();
-    document.getElementById("formBEndButton").style.display = "none";
+document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("divFormB").style.display = "none";
-    document.getElementById("formBStartButton").style.display = "block";
-    document.getElementById("formB").reset();
-});
-
-$(document).on("pagebeforeshow", "#weightlifting", function () {
-    refreshWeightliftingData();
-    document.getElementById("formWEndButton").style.display = "none";
     document.getElementById("divFormW").style.display = "none";
-    document.getElementById("formWStartButton").style.display = "block";
-    document.getElementById("formW").reset();
-});
+    document.getElementById("formBStartButton").addEventListener("click", formBStartEvent);
+    document.getElementById("formWStartButton").addEventListener("click", formWStartEvent);
+    document.getElementById("formBEndButton").addEventListener("click", formBEndEvent);
+    document.getElementById("formWEndButton").addEventListener("click", formWEndEvent);
+    document.getElementById("formBSaveButton").addEventListener("click", formBSaveEvent);
+    document.getElementById("formWSaveButton").addEventListener("click", formWSaveEvent);
 
-$(document).on("pagebeforeshow", "#log", function () {
-    refreshLogData();
+    $(document).on("pagebeforeshow", "#bodyweight", function () {
+        fillArrayFromServer();
+        document.getElementById("formBEndButton").style.display = "none";
+        document.getElementById("divFormB").style.display = "none";
+        document.getElementById("formBStartButton").style.display = "block";
+        document.getElementById("formB").reset();
+    });
+    
+    $(document).on("pagebeforeshow", "#weightlifting", function () {
+        fillArrayFromServer();
+        document.getElementById("formWEndButton").style.display = "none";
+        document.getElementById("divFormW").style.display = "none";
+        document.getElementById("formWStartButton").style.display = "block";
+        document.getElementById("formW").reset();
+    });
+    
+    $(document).on("pagebeforeshow", "#log", function () {
+        fillArrayFromServer();
+    });
+
 });
 
 function fillArrayFromServer(){
     // using fetch call to communicate with node server to get all data
-    fetch('/logData')
+    fetch('/workoutList')
     .then(function (theResonsePromise) {  // wait for reply.  
         return theResonsePromise.json();
     })
     .then(function (serverData) { // now wait for the 2nd promise, which is when data has finished being returned to client
-        workoutArray.length = 0;  // clear local array
-        workoutArray = serverData;   // use our server json data which matches our objects in the array perfectly
-        createTrackerTable();  // placing this here will make it wait for data from server to be complete before re-doing the list
+    workoutArray.length = 0;  // clear local array
+    workoutArray = serverData;   // use our server json data which matches our objects in the array perfectly
+    refreshLogData();  // placing this here will make it wait for data from server to be complete before re-doing the list
+    refreshBodyweightData();
+    refreshWeightliftingData();
+    maxID();
     })
     .catch(function (err) {
      console.log(err);
     });
 };
-
-// using fetch to push an object up to server
-function addNewFormB(newWorkout){
-    // the required post body data is our workout object passed into this function
-        
-        // create request object
-        const request = new Request('/addFormB', {
-            method: 'POST',
-            body: JSON.stringify(newWorkout),
-            headers: new Headers({
-                'Content-Type': 'application/json'
-            })
-        });
-        
-      // use that request object we just created for our fetch() call
-      fetch(request)
-      // wait for frist server promise response of "200" success 
-      // (can name these returned promise objects anything you like)
-         .then(function (theResonsePromise) {    // the .json sets up 2nd promise
-          return theResonsePromise.json()  })
-       // now wait for the 2nd promise, which is when data has finished being returned to client
-          .then(function (theResonsePromiseJson) { 
-            console.log(theResonsePromiseJson.toString()),
-            document.location.href = "#bodyweight" 
-            })
-      // the client console log will write out the message I added to the Repsonse on the server
-      .catch(function (err) {
-          console.log(err);
-      });
-    
-        
-    };
-
-    // using fetch to push an object up to server
-function addNewFormW(newWorkout){
-    // the required post body data is our workout object passed into this function
-        
-        // create request object
-        const request = new Request('/addFormW', {
-            method: 'POST',
-            body: JSON.stringify(newWorkout),
-            headers: new Headers({
-                'Content-Type': 'application/json'
-            })
-        });
-        
-      // use that request object we just created for our fetch() call
-      fetch(request)
-      // wait for frist server promise response of "200" success 
-      // (can name these returned promise objects anything you like)
-         .then(function (theResonsePromise) {    // the .json sets up 2nd promise
-          return theResonsePromise.json()  })
-       // now wait for the 2nd promise, which is when data has finished being returned to client
-          .then(function (theResonsePromiseJson) { 
-            console.log(theResonsePromiseJson.toString()), 
-            document.location.href = "#weightlifting" 
-            })
-      // the client console log will write out the message I added to the Repsonse on the server
-      .catch(function (err) {
-          console.log(err);
-      });
-    };
-
 
 function formBStartEvent(){
     document.getElementById("formBStartButton").style.display = "none";
@@ -139,6 +82,7 @@ function formBStartEvent(){
     document.getElementById("divFormB").style.display = "block";
     document.getElementById("formBDateInput").select();
 }
+
 function formWStartEvent(){
     document.getElementById("formWStartButton").style.display = "none";
     document.getElementById("formWEndButton").style.display = "block";
@@ -160,14 +104,12 @@ function formWEndEvent(){
 
 function formBSaveEvent(){
     maxID();
-    let workout = new WorkoutObject((lastID + 1), document.getElementById("formBDateInput").value, "Bodyweight", document.getElementById("formBExerciseInput").value, document.getElementById("formBRepsInput").value, 0);
-    if (!workout.isValid()) {
+    let newWorkoutB = new WorkoutObject(document.getElementById("formBDateInput").value, "Bodyweight", document.getElementById("formBExerciseInput").value, document.getElementById("formBRepsInput").value, 0);
+    if (!newWorkoutB.isValid()) {
         alert('Error: Invalid data.')
     } else {
-        // workoutArray.push(workout);
-        addNewFormB(workout);
-        lastID++;
-        refreshBodyweightData();
+        addNewWorkoutB(newWorkoutB);
+        fillArrayFromServer();
         document.getElementById("formB").reset();
         document.getElementById("formBDateInput").select();
     };
@@ -175,18 +117,74 @@ function formBSaveEvent(){
 
 function formWSaveEvent(){
     maxID();
-    let workout = new WorkoutObject((lastID + 1), document.getElementById("formWDateInput").value, "Weightlifting", document.getElementById("formWExerciseInput").value, document.getElementById("formWRepsInput").value, document.getElementById("formWWeightInput").value);
-    if (!workout.isValid()) {
+    let newWorkoutW = new WorkoutObject(document.getElementById("formWDateInput").value, "Weightlifting", document.getElementById("formWExerciseInput").value, document.getElementById("formWRepsInput").value, document.getElementById("formWWeightInput").value);
+    if (!newWorkoutW.isValid()) {
         alert('Error: Invalid data.')
     } else {
-        // workoutArray.push(workout);
-        addNewFormW(workout);
-        lastID++;
-        refreshWeightliftingData();
+        // workoutArray.push(newWorkoutW);
+        addNewWorkoutW(newWorkoutW);
+        // refreshWeightliftingData();
+        fillArrayFromServer();
         document.getElementById("formW").reset();
         document.getElementById("formWDateInput").select();
     };
 }
+
+function addNewWorkoutB(newWorkoutB){
+    // the required post body data is our Workout object passed into this function
+    // create request object
+    const request = new Request('/addWorkoutB', {
+        method: 'POST',
+        body: JSON.stringify(newWorkoutB),
+        headers: new Headers({
+            'Content-Type': 'application/json'
+        })
+    });
+    // use that request object we just created for our fetch() call
+    fetch(request)
+    // wait for frist server promise response of "200" success
+    // (can name these returned promise objects anything you like)
+    .then(function (theResonsePromise) { // the .json sets up 2nd promise
+        return theResonsePromise.json()
+    })
+    // now wait for the 2nd promise, which is when data has finished being returned to client
+    .then(function (theResonsePromiseJson) {
+        console.log(theResonsePromiseJson.toString()),
+        document.location.href = "#bodyweight"
+    })
+    // the client console log will write out the message I added to the Repsonse on the server
+    .catch(function (err) {
+        console.log(err);
+    });
+};
+
+function addNewWorkoutW(newWorkoutW){
+    // the required post body data is our Workout object passed into this function
+    // create request object
+    const request = new Request('/addWorkoutW', {
+        method: 'POST',
+        body: JSON.stringify(newWorkoutW),
+        headers: new Headers({
+            'Content-Type': 'application/json'
+        })
+    });
+    // use that request object we just created for our fetch() call
+    fetch(request)
+    // wait for frist server promise response of "200" success
+    // (can name these returned promise objects anything you like)
+    .then(function (theResonsePromise) { // the .json sets up 2nd promise
+        return theResonsePromise.json()
+    })
+    // now wait for the 2nd promise, which is when data has finished being returned to client
+    .then(function (theResonsePromiseJson) {
+        console.log(theResonsePromiseJson.toString()),
+        document.location.href = "#weightlifting"
+    })
+    // the client console log will write out the message I added to the Repsonse on the server
+    .catch(function (err) {
+        console.log(err);
+    });
+};
 
 function createTrackerTable() {
     let divLogData = document.getElementById("divLogData");
@@ -368,13 +366,13 @@ function maxID(){
 WorkoutObject.prototype.isValid = function(){
     switch (this.Workout) {
         case "Bodyweight":
-            if (this.Date === "" || this.Reps === "" || isNaN(this.Reps) || this.Reps > 9999 || this.Reps < 1) {
+            if (this.Date === "" || this.Reps === "" || isNaN(this.Reps) || this.Reps > 99999 || this.Reps < 1) {
                 return false;
             } else {
                 return true;
             };
         case "Weightlifting":
-            if (this.Date === "" || this.Reps === "" || isNaN(this.Reps) || this.Reps > 9999 || this.Reps < 1) {
+            if (this.Date === "" || this.Reps === "" || isNaN(this.Reps) || this.Reps > 99999 || this.Reps < 1) {
                 return false;
             } else {
                 return true;
@@ -387,7 +385,6 @@ function refreshBodyweightData() {
     while (divBodyweightData.firstChild) {
         divBodyweightData.removeChild(divBodyweightData.firstChild);
     };
-    fillArrayFromServer();
     createBodyweightMaxTable();
 }
 
@@ -396,7 +393,6 @@ function refreshWeightliftingData() {
     while (divWeightliftingData.firstChild) {
         divWeightliftingData.removeChild(divWeightliftingData.firstChild);
     };
-    fillArrayFromServer();
     createWeightliftingMaxTable();
 }
 
@@ -405,7 +401,7 @@ function refreshLogData() {
     while (divLogData.firstChild) {
         divLogData.removeChild(divLogData.firstChild);
     };
-    fillArrayFromServer();
+    createTrackerTable();
 }
 
 function createEventListener() {
@@ -414,33 +410,21 @@ function createEventListener() {
         tableRowDeleteArray[i].addEventListener('click', function () {
             deleteID = this.getAttribute("data-parm");
             deleteItem(deleteID);
+            fillArrayFromServer();
         });
     }
 }
 
-// function deleteItem(which) {
-//     let arrayPointer = GetArrayPointer(which);
-//     workoutArray.splice(arrayPointer, 1);
-//     refreshLogData();
-// }
-
-// function GetArrayPointer(localID) {
-//     for (let i = 0; i < workoutArray.length; i++) {
-//         if (localID === workoutArray[i].ID) {
-//             return i;
-//         }
-//     }
-// }
-
 function deleteItem(which) {
     fetch('deleteWorkout/' + which , {
-           method: 'DELETE'
-       })  
-       // now wait for promise, saying server was happy with request or not
-       .then(function (theResonsePromiseDel) {
-        console.log(theResonsePromiseDel), 
-        document.location.href = "index.html#log" })
-       .catch(function (err) {
-           alert(err);
-        });      
+        method: 'DELETE'
+    })
+    // now wait for promise, saying server was happy with request or not
+    .then(function (theResonsePromiseDel) {
+        console.log(theResonsePromiseDel),
+        document.location.href = "#log"
+    })
+    .catch(function (err) {
+        alert(err);
+    });
 };
